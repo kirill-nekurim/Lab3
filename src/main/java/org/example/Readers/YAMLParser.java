@@ -40,11 +40,8 @@ public class YAMLParser extends FileReader {
 Map<String, ReactorStructure> map = null;
 try{
     YAMLMapper mapper = new YAMLMapper();
-    map = mapper.readValue(file, new TypeReference<Map<String, ReactorStructure>>() {
-        @Override
-        public Type getType() {
-            return super.getType();
-        }
+    map = mapper.readValue(file, new TypeReference<Map<String, ReactorStructure>>(){
+
     });
 } catch (IOException e){
     Logger.getLogger(YAMLParser.class.getName()).log(Level.SEVERE, null, e);
