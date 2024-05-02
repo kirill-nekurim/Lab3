@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ReactorStructure {
     public String filetype;
-    public String reactorClass;
+    public String type;
     public double burnup;
     public double kpd;
     public double enrichment;
@@ -18,7 +18,7 @@ public class ReactorStructure {
         this.filetype = filetype;
     }
     public void setReactorClass(String type) {
-        this.reactorClass = reactorClass;
+        this.type = type;
     }
     public void setBurnup(double burnup) {
         this.burnup = burnup;
@@ -45,7 +45,7 @@ public class ReactorStructure {
         return this.filetype;
     }
     public String getReactorClass(){
-        return this.reactorClass;
+        return this.type;
     }
     public double getBurnup() {
         return this.burnup;
