@@ -12,6 +12,8 @@ import org.example.ReactorStructure;
 
 
 public class GUI extends javax.swing.JFrame {
+    DefaultTreeModel model;
+    Director manager = new Director();
     public GUI() {
         initComponents();
     }
@@ -96,35 +98,24 @@ DefaultMutableTreeNode reactors = new DefaultMutableTreeNode("Reactors");
 
     private void chooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFileActionPerformed
         JFileChooser chooser = new JFileChooser();
+        // Указываем начальный каталог
         chooser.setCurrentDirectory(new File("."));
-        int returnVal = chooser.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-  if (chooser.getSelectedFile() == null) {
-    System.out.println("Choose a file!");
-
-  }
-  // Создаем экземпляр класса Director
-  Director director = new Director();
-  director.setList(chooser.getSelectedFile());
-  // Очищаем существующее дерево реакторов (подготовка к новой загрузке)
-  DefaultTreeModel model = (DefaultTreeModel) ReactorsTree.getModel();
-  model.setRoot(new DefaultMutableTreeNode("Reactors"));
-
-  // Перебираем список реакторов из Director и строим дерево
-  for (ReactorStructure reactor : director.getList()) {
-    DefaultMutableTreeNode concreteReactor = new DefaultMutableTreeNode(reactor.getReactorClass());
-    for (String parameter : reactor.getParameters()) {
-      concreteReactor.add(new DefaultMutableTreeNode(parameter));
-    }
-    DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
-root.add(concreteReactor);
-  }
-
-  // Обновляем модель дерева
-  model.reload();
-  ReactorsTree.setModel(model);}
-        else {
-            System.out.println("User cancelled file selection.");
+        // Отобразим диалоговое окно
+        int response = chooser.showOpenDialog(null);
+        if (chooser.getSelectedFile() == null) {
+            System.out.println("Choose a file!");
+        } else {
+            manager.setList(new File(chooser.getSelectedFile().getAbsolutePath()));
+            for (ReactorStructure reactor : manager.getList()) {
+                DefaultMutableTreeNode concreteReactor = new DefaultMutableTreeNode(reactor.getReactorClass());
+                for (String parameter : reactor.getParameters()){
+                    concreteReactor.add(new DefaultMutableTreeNode(parameter));
+                }
+                reactors.add(concreteReactor);
+                model = (DefaultTreeModel) ReactorsTree.getModel();
+                model.setRoot(reactors);
+                ReactorsTree.setModel(model);
+            }
         }
     }//GEN-LAST:event_chooseFileActionPerformed
 

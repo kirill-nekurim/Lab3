@@ -11,4 +11,5 @@ public abstract class FileReader {
         this.nextReader = nextReader;
     }
     public abstract ArrayList<ReactorStructure> read(File file);
+
 }

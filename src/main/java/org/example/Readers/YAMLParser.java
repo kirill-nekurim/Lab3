@@ -19,7 +19,7 @@ public class YAMLParser extends FileReader {
     @Override
     public ArrayList<ReactorStructure> read(File file) {
         ArrayList<ReactorStructure> list;
-        if("json".equals(FilenameUtils.getExtension(file.getAbsolutePath()))){
+        if("yaml".equals(FilenameUtils.getExtension(file.getAbsolutePath()))){
             try{
                 list = readYAML(file);
                 for(ReactorStructure reactor : list){
@@ -41,7 +41,6 @@ Map<String, ReactorStructure> map = null;
 try{
     YAMLMapper mapper = new YAMLMapper();
     map = mapper.readValue(file, new TypeReference<Map<String, ReactorStructure>>(){
-
     });
 } catch (IOException e){
     Logger.getLogger(YAMLParser.class.getName()).log(Level.SEVERE, null, e);
