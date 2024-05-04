@@ -1,6 +1,7 @@
 package org.example.Readers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.example.ReactorStructure;
 
 import java.io.File;
@@ -30,9 +31,15 @@ else if(nextReader != null){
 return null;
     }
 
-    private ArrayList<ReactorStructure> readJSON(File file) throws FileNotFoundException, IOException {
+    public ArrayList<ReactorStructure> readJSON(File file) throws FileNotFoundException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        ArrayList<ReactorStructure> list = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, ReactorStructure.class));
-        return list;
+        try {
+            ArrayList<ReactorStructure> list = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, ReactorStructure.class));
+            return list;
+        } catch (MismatchedInputException e) {
+            // Обработка ошибки десериализации, например вывод сообщения пользователю
+            System.out.println("Ошибка формата JSON файла!");
+            return null;
         }
+    }
 }

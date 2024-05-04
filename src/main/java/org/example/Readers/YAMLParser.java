@@ -36,7 +36,7 @@ public class YAMLParser extends FileReader {
         return null;
     }
 
-    private ArrayList<ReactorStructure> readYAML(File file) throws IOException, FileNotFoundException {
+    public ArrayList<ReactorStructure> readYAML(File file) throws IOException, FileNotFoundException {
 Map<String, ReactorStructure> map = null;
 try{
     YAMLMapper mapper = new YAMLMapper();

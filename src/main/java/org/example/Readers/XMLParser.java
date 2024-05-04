@@ -12,6 +12,7 @@ import javax.xml.stream.events.XMLEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class XMLParser extends FileReader{
@@ -25,20 +26,21 @@ public class XMLParser extends FileReader{
                 reactor.setFileType("XML");
             }
             return list;
-        } else if(nextReader != null){
+        }
+
+        else if(nextReader != null){
             return nextReader.read(file);
         }
         return null;
     }
 
-    private ArrayList<ReactorStructure> readXML(File file) {
+    public ArrayList<ReactorStructure> readXML(File file) {
         ArrayList<ReactorStructure> list = new ArrayList<>();
         ReactorStructure reactor = null;
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
             // проходим по всем элементам xml файла
-            XMLEventReader reader = xmlInputFactory.createXMLEventReader(new
-                    FileInputStream(file.getAbsolutePath()));
+            XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(file.getAbsolutePath()));
             while (reader.hasNext()) {
                 XMLEvent xmlEvent = reader.nextEvent();
                 if (xmlEvent.isStartElement()) {
