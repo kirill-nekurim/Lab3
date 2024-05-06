@@ -113,11 +113,17 @@ DefaultMutableTreeNode reactors = new DefaultMutableTreeNode("Reactors");
             }
         }
     }//GEN-LAST:event_chooseFileActionPerformed
+    private void clearList() {
+        manager.getList().clear();  // Очистка списка реакторов
+        updateTree();                // Обновление дерева после очистки
+    }
 
+    private void updateTree() {
+        reactors.removeAllChildren();  // Удаление всех дочерних элементов из узла "Reactors"
+        model.reload();                // Перезагрузка модели дерева
+    }
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        DefaultTreeModel model = (DefaultTreeModel) ReactorsTree.getModel();
-  model.setRoot(new DefaultMutableTreeNode("Reactors"));
-  model.reload();
+        clearList();
     }//GEN-LAST:event_clearButtonActionPerformed
 
     /**
