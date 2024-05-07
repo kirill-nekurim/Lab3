@@ -21,11 +21,16 @@ public class XMLParser extends FileReader{
     public ArrayList<ReactorStructure> read(File file) {
         ArrayList<ReactorStructure> list;
         if("xml".equals(FilenameUtils.getExtension(file.getAbsolutePath()))){
-            list = readXML(file);
-            for (ReactorStructure reactor : list){
-                reactor.setFileType("XML");
+            try {
+                list = readXML(file);
+                for (ReactorStructure reactor : list) {
+                    reactor.setFileType("XML");
+                }
+                return list;
             }
-            return list;
+            catch (IOException e){
+                e.printStackTrace();
+            }
         }
 
         else if(nextReader != null){
@@ -34,7 +39,7 @@ public class XMLParser extends FileReader{
         return null;
     }
 
-    public ArrayList<ReactorStructure> readXML(File file) {
+    public ArrayList<ReactorStructure> readXML(File file) throws IOException, FileNotFoundException{
         ArrayList<ReactorStructure> list = new ArrayList<>();
         ReactorStructure reactor = null;
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
