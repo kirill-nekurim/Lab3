@@ -45,7 +45,7 @@ public class ReactorStructure {
         return this.filetype;
     }
     public String getReactorClass(){
-        return this.type;
+        return type;
     }
     public double getBurnup() {
         return this.burnup;

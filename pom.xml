@@ -30,6 +30,11 @@
             <version>2.14.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
+        </dependency>
     </dependencies>
 
 </project>
