@@ -7,7 +7,6 @@ public class Calculator {
     public void calculateFuelLoad(ArrayList<ReactorDB> reactors) {
 
         for (ReactorDB reactor : reactors) {
-            if (reactor.getReactorClass() != null) {
                 int year = 2014;
                 while (year < 2025) {
                     double fuelLoad = 0;
@@ -19,10 +18,8 @@ public class Calculator {
                     reactor.getFuelLoad().put(year, fuelLoad);
                     year++;
                 }
-            }
-            else {
-                System.out.println("Reactor " + reactor.getName() + " has no type assigned!");
-            }
+
+
         }
     }
 }

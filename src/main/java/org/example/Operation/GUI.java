@@ -5,7 +5,10 @@
 package org.example.Operation;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -335,20 +338,23 @@ DefaultMutableTreeNode reactors = new DefaultMutableTreeNode("Reactors");
     private javax.swing.JButton regionButton;
     // End of variables declaration//GEN-END:variables
 
-    
+
     private void createTable(String title, Map<String, Map<Integer, Double>> map) {
         if (map != null) {
-            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            // Define an ordered list of years
+            List<Integer> years = IntStream.range(2014, 2025).boxed().collect(Collectors.toList());
+
+            DefaultTableModel model = new javax.swing.table.DefaultTableModel(
                     new Object[][]{},
                     new String[]{
-                        title, "Объем ежегодной загрузки, т", "Год"
+                            title, "Объем ежегодной загрузки, т", "Год"
                     }
             ) {
                 Class[] types = new Class[]{
-                    java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                        java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
                 };
                 boolean[] canEdit = new boolean[]{
-                    false, false, false
+                        false, false, false
                 };
 
                 public Class getColumnClass(int columnIndex) {
@@ -358,17 +364,29 @@ DefaultMutableTreeNode reactors = new DefaultMutableTreeNode("Reactors");
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return canEdit[columnIndex];
                 }
-            });
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            };
+
             for (Map.Entry<String, Map<Integer, Double>> entry : map.entrySet()) {
                 Map<Integer, Double> fuelLoad = entry.getValue();
-                for (Map.Entry<Integer, Double> load : fuelLoad.entrySet()) {
-                    model.addRow(new Object[]{entry.getKey(), Math.round(load.getValue()), load.getKey()});
+
+                // Iterate through the ordered list of years
+                for (Integer year : years) {
+                    Double load = fuelLoad.get(year);
+                    if (load != null) {
+                        model.addRow(new Object[]{entry.getKey(), Math.round(load), year});
+                    } else {
+                        // Add a row with zero load for missing years
+                        model.addRow(new Object[]{entry.getKey(), 0, year});
+                    }
                 }
             }
+
+            jTable1.setModel(model);
             jTable1.getColumnModel().getColumn(2).setMaxWidth(50);
             aggregationWindow.setSize(480, 500);
             aggregationWindow.setVisible(rootPaneCheckingEnabled);
         }
     }
+
+
 }
