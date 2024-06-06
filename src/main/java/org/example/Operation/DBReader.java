@@ -72,9 +72,9 @@ public class DBReader {
         }
 
         Connection connection = null;
-        String url = "jdbc:postgresql://localhost:5432/Reactor2";
-        String user = "postgres";
-        String password = "Kirill2004";
+        String url =  "jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:6543/postgres";
+        String user = "postgres.edqvorgrdblzanmnbhqs";
+        String password = "DebilDebil228_debil";
         try {
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
